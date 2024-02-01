@@ -74,6 +74,22 @@ void deleteLast()
 	 	
 	 }
 }
+void deleteany(int pos){
+	int i=0;
+	if(start==NULL)
+	 printf("\n List is Empty ");
+	 else{
+	 	ptr=start;
+	 	while(i!=pos){
+	 		ptr=ptr->link;
+	 		i++;
+		 }
+		 printf("\n Deleted %d",ptr->data);
+		 ptr->link=ptr->link->link;
+		 ptr->link=NULL;
+	 	
+	 }
+}
 void display()
 {
 	if(start==NULL)
@@ -98,7 +114,8 @@ int main()
 		printf("\n 2 for Insert Last ");
 		printf("\n 3 for Delete First ");
 		printf("\n 4 for Delete Last ");
-		printf("\n 5 for Exit ");
+		printf("\n 5 for Delete any ");
+		printf("\n 6 for Exit ");
 		printf("\n Enter choice : ");
 		scanf("%d",&ch);
 		
@@ -123,8 +140,12 @@ int main()
 			deleteLast();
 			display();
 			break;
-			
 			case 5:
+			deleteany(3);
+			display();
+			break;
+						
+			case 6:
 			exit(1);
 			
 			default:
