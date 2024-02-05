@@ -75,18 +75,18 @@ void deleteLast()
 	 }
 }
 void deleteany(int pos){
-	int i=0;
+	int i=1;
 	if(start==NULL)
 	 printf("\n List is Empty ");
 	 else{
 	 	ptr=start;
-	 	while(i!=pos){
+	 	while(i!=pos-1){
 	 		ptr=ptr->link;
 	 		i++;
 		 }
-		 printf("\n Deleted %d",ptr->data);
+		 printf("\n Deleted %d",ptr->link->data);
 		 ptr->link=ptr->link->link;
-		 ptr->link=NULL;
+		 
 	 	
 	 }
 }
