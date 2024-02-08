@@ -90,6 +90,30 @@ void deleteany(int pos){
 	 	
 	 }
 }
+void insertany(int pos){
+	int i=1;
+	temp=(node*)malloc(sizeof(node));
+	printf("\n Enter the data : ");
+	scanf("%d",&temp->data);
+	temp->link=NULL;
+	ptr=start;
+	
+	if(start==NULL)
+	 start=temp;
+	else
+	{
+		while(i!=pos-1){
+			ptr=ptr->link;
+	 		i++;
+		}
+		temp->link=ptr->link;
+		ptr->link=temp;
+		
+	}
+		 
+	 	
+	 
+}
 void display()
 {
 	if(start==NULL)
@@ -115,7 +139,8 @@ int main()
 		printf("\n 3 for Delete First ");
 		printf("\n 4 for Delete Last ");
 		printf("\n 5 for Delete any ");
-		printf("\n 6 for Exit ");
+		printf("\n 6 for Insert any ");
+		printf("\n 7 for Exit ");
 		printf("\n Enter choice : ");
 		scanf("%d",&ch);
 		
@@ -144,8 +169,13 @@ int main()
 			deleteany(3);
 			display();
 			break;
-						
+			
 			case 6:
+			insertany(3);// give the position inside the brackets
+			display();
+			break;
+						
+			case 7:
 			exit(1);
 			
 			default:
