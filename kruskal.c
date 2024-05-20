@@ -1,89 +1,56 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define MAX 100
+#define INF 9999
 
-int find(int a,int par[]){
-    if(par[a]==a){
-        return a;
-    }
-    return par[a]=find(par[a],par);
+int find(int arr[], int v){
+    if(arr[v] == v) return v;
+    return find(arr, arr[v]);
 }
 
-void unionn(int a,int b,int par[],int rank[]){
-    int parA=find(a,par);
-    int parB=find(b,par);
+void uniOn(int arr[], int u, int v){
+    u = find(arr, u);
+    v = find(arr, v);
 
-    if(parA==parB){
-        par[b]=parA;
-        rank[a]++;
-    }
-    else if(parA>parB){
-        par[b]=parA;
-    }
-    else{
-        par[a]=parB;
-    }
+    arr[u] = v;
 }
 
-void swap(int a[],int b[],int size){
-    int temp[size];
-    for(int i=0;i<size;i++){
-        temp[i]=a[i];
-    }
-    for(int i=0;i<size;i++){
-        a[i]=b[i];
-    }
-    for(int i=0;i<size;i++){
-        b[i]=temp[i];
-    }
-}
+void krusk(int graph[MAX][MAX], int n){
+    int arr[MAX];
 
-void sort(int graph[][3],int E){
-    for(int i=0;i<E-1;i++){
-        for(int j=i+1;j<E;j++){
-            if(graph[i][2]>graph[j][2]){
-                swap(graph[i],graph[j],3);
+    for(int i = 0; i < n; i++){
+        arr[i] = i;
+    }
+    int edgeCount = 0;
+
+    while(edgeCount < n - 1){
+        int min = INF, u, v;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(find(arr, i) != find(arr, j) && graph[i][j] < min){
+                    min = graph[i][j];
+                    u = i;
+                    v = j;
+                }
             }
         }
+        uniOn(arr, u, v);
+        printf("Edge: %d (%d --> %d) Weight: %d\n", edgeCount++, u, v, min);
     }
 }
 
-void krushkal(int graph[][3],int V,int E){
-    int par[V];
-    int rank[V];
-    for(int i=0;i<V;i++){
-        par[i]=i;
-        rank[i]=0;
-    }
+int main(){
+    int n = 5;
+    int graph[MAX][MAX] = {
+        {0, 2, INF, 6, INF},
+        {2, 0, 3, 8, 5},
+        {INF, 3, 0, INF, 7},
+        {6, 8, INF, 0, 9},
+        {INF, 5, 7, 9, 0}
+    };
 
-    sort(graph,E);
 
-    int finalCost=0;
-    for(int i=0;i<E;i++){
-        int findSrc=find(graph[i][0],par);
-        int findDest=find(graph[i][1],par);
+    krusk(graph, n);
 
-        if(findSrc!=findDest){
-            unionn(findSrc,findDest,par,rank);
-            finalCost+=graph[i][2];
-        }
-    }
-    printf("FinalCost = %d",finalCost);
-}
-
-void main(){
-    int V,E;
-    printf("enter the number of vertices : ");
-    scanf("%d",&V);
-    printf("enter the number of edges : ");
-    scanf("%d",&E);
-
-    int graph[E][3];
-
-    printf("enter the edge info in the format soource,destination,weight \n");
-    for(int i=0;i<E;i++){
-        printf("edge %d :",(i+1));
-        scanf("%d,%d,%d",&graph[i][0],&graph[i][1],&graph[i][2]);
-    }
-
-    krushkal(graph,V,E);
+    return 0;
 }
