@@ -1,17 +1,13 @@
 #include <stdio.h>
-#define MAX 6 // Adjust MAX according to the size of the matrix
 
 int main() {
-    int a[MAX][MAX] = {
-        {0, 1, 1, 0, 0, 0},
-        {1, 0, 0, 1, 1, 0},
-        {1, 0, 0, 1, 0, 1},
-        {0, 1, 1, 0, 0, 0},
-        {0, 1, 0, 0, 0, 1},
-        {0, 0, 1, 0, 1, 0}
-    };
-
-    int color[MAX] = {0}, n = MAX, i, j, p = 1;
+    int a[6][6] = {{0, 1, 1, 0, 0, 0},
+                   {1, 0, 0, 1, 1, 0},
+                   {1, 0, 0, 1, 0, 1},
+                   {0, 1, 1, 0, 0, 0},
+                   {0, 1, 0, 0, 0, 1},
+                   {0, 0, 1, 0, 1, 0}};
+    int color[6] = {0}, n = 6, i, j, p = 1;
 
     printf("\nMatrix form:\n");
     for (i = 0; i < n; i++) {
@@ -23,10 +19,8 @@ int main() {
     color[0] = 1;
     while (p < n) {
         color[p] = 1;
-        for (j = 0; j < p; j++) {
-            if (a[p][j] == 1 && color[j] == color[p])
-                color[p]++;
-        }
+        for (j = 0; j < p; j++)
+            if (a[p][j] == 1 && color[j] == color[p]) color[p]++;
         p++;
     }
 
