@@ -1,31 +1,38 @@
-#include <stdio.h>
+#include<stdio.h>
 
-#define V 4
-#define INF 9999
+#define N 6
+#define INF 99999
 
-void dijkstra(int g[V][V], int s) {
-    int d[V], vstd[V] = {0}, mD, u;
-    for (int i = 0; i < V; i++) d[i] = INF;
-    d[s] = 0;
-    for (int c = 0; c < V - 1; c++) {
-        mD = INF;
-        for (int v = 0; v < V; v++)
-            if (!vstd[v] && d[v] <= mD)
-                mD = d[v], u = v;
-        vstd[u] = 1;
-        for (int v = 0; v < V; v++)
-            if (!vstd[v] && g[u][v] && d[u] != INF && d[u] + g[u][v] < d[v])
-                d[v] = d[u] + g[u][v];
+void print(int dist[]){
+    for(int i = 0; i < N; i++){
+        printf("%d\n", dist[i]);
     }
-    printf("Vertex \t Distance from Source\n");
-    for (int i = 0; i < V; i++) printf("%d \t\t %d\n", i, d[i]);
 }
 
-int main() {
-    int graph[V][V] = {{0, 5, INF, 10},
-                       {INF, 0, 3, INF},
-                       {INF, INF, 0, 1},
-                       {INF, INF, INF, 0}};
-    dijkstra(graph, 0);
+void calculation(int graph[N][N]){
+    int dist[N] = {INF, INF, INF, INF, INF, INF};
+    dist[0] = 0;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            if((graph[i][j] != INF) && ((dist[i] + graph[i][j]) < dist[j])){
+                dist[j] = dist[i] + graph[i][j];
+            }
+        }
+    }
+    print(dist);
+}
+
+
+
+int main(){
+    int graph[N][N] = {{0, 4, 4, INF, INF, INF},
+                    {4, 0, 2, INF, INF, INF},
+                    {4, 2, 0, 3, 1, 6},
+                    {INF, INF, 3, 0, INF, 2},
+                    {INF, INF, 2, INF, 0, 3},
+                    {INF, INF, 6, 2, 3, 0}};
+    
+    calculation(graph);
+
     return 0;
 }
